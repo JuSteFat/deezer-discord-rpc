@@ -40,7 +40,6 @@ export async function load(app: Electron.App) {
     userAgent
   });
 
-  await setThumbarButtons();
 
   session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
     if (details.url.includes('deezer.com')) {
@@ -94,6 +93,7 @@ export async function load(app: Electron.App) {
   });
 
   wait(5000).then(() => {
+    setThumbarButtons();
     runJs(`document.querySelector('.slider-track-input.mousetrap').addEventListener('click', () => ipcRenderer.send('update_activity', true))
                  const trackObserver = new MutationObserver(() => ipcRenderer.send('update_activity', false));
                  trackObserver.observe(document.querySelector('[data-testid="item_title"] a'), { childList: true, subtree: true, characterData: true });
